@@ -1,0 +1,67 @@
+#include<stdio.h>
+#include<stdlib.h>
+int queue[4],front=-1,rear=-1;
+void enqueue()
+  {
+     if(rear==3)
+       {
+          printf("Queue is full");
+       }
+     else
+       {
+          if(front==-1)
+            {
+               front++;
+            }  
+          rear++;
+          printf("\nEnter the number to insert:");
+          scanf("%d",&queue[rear]);
+       }
+   }
+void dequeue()
+   {
+      if(front==-1||front>rear)
+        {
+          printf("\nThe queue is empty");
+        }
+      else
+        { 
+          printf("\nDeleted the number%d",queue[front]);
+          front++;
+        } 
+     }  
+void display()
+   {
+       int i;
+       printf("\nThe queue is");
+       for(i=front;i<=rear;i=i+1)
+        {
+            printf("\n%d",queue[i]);
+        }
+    }        
+int main()
+  {  
+     int n;
+     while(1)
+       {
+          printf("\n1.Enter\n2.Delete\n3.Display\n4.Exit\nEnter your choice:");
+          scanf("%d",&n);
+          switch(n)
+            {
+              case 1:
+                 enqueue();
+                 break;
+              case 2:
+                 dequeue();
+                 break;
+              case 3:
+                 display();
+                 break;
+              case 4:
+                 exit(1);
+                 break;
+              default:
+                 printf("Wrong entry");     
+            }
+         }   
+   }      
