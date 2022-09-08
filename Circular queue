@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<stdlib.h>
+int cqueue[4],rear=-1,front=-1;
+void enqueue()
+    {
+     if((front==0 && rear==3)||(rear==front-1))
+       {
+          printf("The circular queue is full");
+       }   
+     else
+       {
+          if(front==-1)
+            {
+               front++;
+            }
+          rear=(rear+1)%4;
+          printf("Enter the value to be inserted:");
+          scanf("%d",&cqueue[rear]);
+        }
+     }    
+void dequeue()
+   { 
+     if(front==-1 && rear==-1)
+       {
+          printf("The circular queue is empty");
+       }
+     else
+       {
+          if(front==rear)
+            {
+               printf("\nRemoved the last number:%d",cqueue[front]);
+               rear=-1;
+               front=-1;
+            }
+          else
+            {
+               printf("\nRemoved the number:%d",cqueue[front]);
+               front=(front+1)%4;
+            }
+        }    
+    }           
+void display()
+   {
+      int i;
+      printf("\nThe circular queue is:");
+      for(i=front;i!=rear;i=(i+1)%4)
+        {
+           printf("\n%d",cqueue[i]);
+        } 
+      printf("\n%d",cqueue[rear]); 
+   }   
+int main()
+    {
+     int n;
+     while(1)
+       {
+          printf("\n1.Enter\n2.Delete\n3.Display\n4.Exit\nEnter your choice:");
+          scanf("%d",&n);
+          switch(n)
+            {
+              case 1:
+                 enqueue();
+                 break;
+              case 2:
+                 dequeue();
+                 break;
+              case 3:
+                 display();
+                 break;
+              case 4:
+                 exit(1);
+                 break;
+              default:
+                 printf("Wrong entry");  
+           }            
+        }
+   }     
