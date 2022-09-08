@@ -1,0 +1,95 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct block
+  {
+     int data;
+     struct block *adrs;
+  };    
+struct block *new,*i,*temp;
+struct block *head=NULL;  
+void create()
+   {
+     new=(struct block*)malloc(sizeof(struct block));
+     printf("Enter the value to be inserted:");        						//creating a new node
+     scanf("%d",&new->data);
+     new->adrs=NULL;
+   }      
+void push()
+   {
+      create();
+      if(head==NULL)
+         {
+            head=new;
+         }
+      else											                                 //insertion at the end
+         {
+            i=head;
+            while(i->adrs!=NULL)
+               {
+                  i=i->adrs;
+               }
+            i->adrs=new;
+         }
+    }
+void pop()
+   {
+       if(head==NULL)
+         {
+            printf("The list is empty.");
+         }     
+       else if(head->adrs==NULL)
+         {
+            temp=head;
+            head=NULL;
+            printf("Removed %d",temp->data);
+            free(temp);
+         }
+       else											                                  //deletion from the end
+          {  
+              temp=head;
+              while(temp->adrs!=NULL)
+                 {
+                    i=temp;
+                    temp=temp->adrs;
+                 }
+              i->adrs=NULL;
+              printf("Removed %d",temp->data);
+              free(temp);            
+          }
+    } 
+void display()
+   {     
+      printf("The elements in stack is\n");
+      i=head;
+      while(i!=NULL)										                          //Displaying the list
+          {
+             printf("%d\n",i->data);
+             i=i->adrs;
+          }
+   }
+int main()
+  {  
+     int n;
+     while(1)
+       {
+          printf("\n1.Push\n2.Pop\n3.Display\n4.Exit\nEnter your choice:");
+          scanf("%d",&n);
+          switch(n)
+            {
+              case 1:
+                 push();
+                 break;
+              case 2:
+                 pop();
+                 break;
+              case 3:
+                 display();
+                 break;
+              case 4:
+                 exit(1);
+                 break;
+              default:
+                 printf("Wrong entry");     
+            }
+         }   
+   }          
