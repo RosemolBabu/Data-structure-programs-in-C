@@ -1,0 +1,235 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct block
+  {
+     struct block *pre;
+     int data;
+     struct block *adrs;
+  };
+  
+struct block *head=NULL;
+struct block *i,*temp,*new;
+
+void create()
+  {
+     new=(struct block*)malloc(sizeof(struct block));
+     printf("Enter the value to be inserted:");        						                              //creating a new node
+     scanf("%d",&new->data);
+     new->pre=NULL;
+     new->adrs=NULL;
+  }
+  
+void insbeg()
+  {
+     create();
+     if(head==NULL)
+       {
+          head=new;
+       }                                                                                       //insertion at the beginning
+     else
+       {
+          head->pre=new;
+          new->adrs=head;
+          head=new;
+       }
+  }
+  
+void insend()
+  {
+     create();
+     if(head==NULL)
+        {
+           head=new;
+           printf("\nList was empty.Inserted in the first position.\n");
+        }
+     else                                                                                     //insertion at the end
+        {
+          i=head;
+          while(i->adrs!=NULL)
+              {
+                 i=i->adrs;
+              }
+          i->adrs=new;
+          new->pre=i;
+        }
+   }  
+   
+void inspos()
+   {
+      int pos,j;      
+      if(head==NULL)
+         {
+            create();
+            head=new;
+            printf("\nList was empty.Inserted in the first position.\n");   
+         }
+      else
+         {
+            printf("Enter the position value:");                                              //insertion at a position
+            scanf("%d",&pos);
+            if(pos==0)
+      	      {
+       	            insbeg();
+              }
+            else
+              {
+                  create();
+                  i=head;
+                  for(j=1;j<pos-1;j++)
+                     {
+                        i=i->adrs;
+                        if(i->adrs==NULL)
+              		          {
+                  		     printf("\nThe position value is invalid.");                   		     
+                  		     break;                                    
+              		          } 
+                     }
+                  if(i->adrs!=NULL)
+                     {
+                 	 new->adrs=i->adrs;
+                 	 i->adrs->pre=new;
+                 	 i->adrs=new;
+                  	 new->pre=i;
+                     }
+               }
+          }    
+   }             
+    
+void delbeg()
+  {
+     if(head==NULL)
+        {
+            printf("The list is empty.");
+        }
+     else if(head->adrs==NULL)
+        {
+            temp=head;
+            head=NULL;
+            printf("Only 1 node. Removed %d",temp->data);							                      //deletion from the beginning
+            free(temp);
+        }
+     else
+        {
+            temp=head;
+            head=temp->adrs;
+            head->pre=NULL;
+            printf("Removed %d",temp->data);
+            free(temp);
+        }  
+   }  
+   
+void delend()
+   {
+       if(head==NULL)
+         {
+            printf("The list is empty.");
+         }     
+       else if(head->adrs==NULL)
+         {
+            temp=head;
+            head=NULL;
+            printf("Only 1 node. Removed %d",temp->data);
+            free(temp);
+         }
+       else											                                                            //deletion from the end
+          {  
+              temp=head;
+              while(temp->adrs!=NULL)
+                 {                   
+                    temp=temp->adrs;
+                 }
+              temp->pre->adrs=NULL;
+              printf("Removed %d",temp->data);
+              free(temp);            
+          }
+    } 
+    
+void delpos()
+   { 
+       int pos,j;
+       if(head==NULL)
+         {
+            printf("The list is empty.");
+         } 
+       else 
+         {
+            printf("Enter the position:");
+            scanf("%d",&pos);
+            if(pos==0)
+               {
+                  delbeg();									                                                //Deletion from a position
+               }
+            else
+               {
+                  temp=head;
+                  for(j=0;j<pos;j++)
+                     {                        
+                        temp=temp->adrs;
+                        if(temp==NULL)
+                           {
+                               printf("The position value is invalid.");
+                               break;
+                           }
+                      }     
+                   if(temp!=NULL)
+                     {
+                        temp->pre->adrs=temp->adrs;
+                        temp->adrs->pre=temp->pre;
+                        printf("Removed %d",temp->data);
+                        free(temp);
+                     }  
+                }
+         }
+   }                                
+                            
+void display()
+   {     
+      printf("The elements in linked list is\n");
+      i=head;
+      while(i!=NULL)										                                                      //Displaying the list
+          {
+             printf("%d\n",i->data);
+             i=i->adrs;
+          }
+   }
+   
+int main()
+  {    
+      int n;
+      while(1)
+       {
+           printf("\n1.Insert Beginning\n2.Insert End\n3.Insert Position\n4.Delete Beginning\n5.Delete End\n6.Delete Position");
+           printf("\n7.Display\n8.Exit");
+           printf("\nEnter your choice:");
+           scanf("%d",&n);
+           switch(n)
+            {
+              case 1:
+                 insbeg();
+                 break;
+              case 2:
+                 insend();
+                 break;
+              case 3:
+                 inspos();                
+                 break;
+              case 4:
+                 delbeg();
+                 break;    
+              case 5:
+                 delend();
+                 break;
+              case 6:
+                 delpos();
+                 break;         
+              case 7:
+                 display();
+                 break;
+              case 8:
+                 exit(1);
+                 break;
+              default:
+                 printf("Wrong entry");  
+           }            
+        }
+  }   
